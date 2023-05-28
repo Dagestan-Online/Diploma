@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище DiplomaDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_post" Type="int" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="lastname" Type="nvarchar(max)" />
+    <Property Name="middlename" Type="nvarchar(max)" />
+    <Property Name="phone" Type="nvarchar(max)" />
+    <Property Name="email" Type="nvarchar(max)" />
+    <Property Name="birthDate" Type="date" />
+    <Property Name="employmentDate" Type="date" />
+    <Property Name="image" Type="image" />
+  </EntityType>
+  <EntityType Name="Material">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_material" Type="int" />
+    <Property Name="id_productType" Type="int" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="count" Type="float" />
+    <Property Name="image" Type="image" />
+  </EntityType>
+  <EntityType Name="ProductionPlan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="startDate" Type="date" />
+    <Property Name="finishDate" Type="date" />
+    <Property Name="calculated" Type="bit" />
+  </EntityType>
+  <EntityType Name="ProductionPlanEmployee">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_plan" Type="int" />
+    <Property Name="id_employee" Type="int" />
+  </EntityType>
+  <EntityType Name="ProductionPlanProduct">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_plan" Type="int" />
+    <Property Name="id_product" Type="int" />
+    <Property Name="productCount" Type="float" />
+  </EntityType>
+  <EntityType Name="ProductType">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Employee_Post">
+    <End Role="Post" Type="Self.Post" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="id_post" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Material">
+    <End Role="Material" Type="Self.Material" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Material">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="id_material" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_ProductType">
+    <End Role="ProductType" Type="Self.ProductType" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductType">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="id_productType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionPlanEmployee_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductionPlanEmployee" Type="Self.ProductionPlanEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ProductionPlanEmployee">
+        <PropertyRef Name="id_employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionPlanEmployee_ProductionPlan">
+    <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductionPlanEmployee" Type="Self.ProductionPlanEmployee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionPlan">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ProductionPlanEmployee">
+        <PropertyRef Name="id_plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionPlanProduct_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductionPlanProduct" Type="Self.ProductionPlanProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ProductionPlanProduct">
+        <PropertyRef Name="id_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionPlanProduct_ProductionPlan">
+    <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ProductionPlanProduct" Type="Self.ProductionPlanProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProductionPlan">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ProductionPlanProduct">
+        <PropertyRef Name="id_plan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище DiplomaDBModelContainer">
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionPlan" EntityType="Self.ProductionPlan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionPlanEmployee" EntityType="Self.ProductionPlanEmployee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductionPlanProduct" EntityType="Self.ProductionPlanProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+      <End Role="Post" EntitySet="Post" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Material" Association="Self.FK_Product_Material">
+      <End Role="Material" EntitySet="Material" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_ProductType" Association="Self.FK_Product_ProductType">
+      <End Role="ProductType" EntitySet="ProductType" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionPlanEmployee_Employee" Association="Self.FK_ProductionPlanEmployee_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="ProductionPlanEmployee" EntitySet="ProductionPlanEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionPlanEmployee_ProductionPlan" Association="Self.FK_ProductionPlanEmployee_ProductionPlan">
+      <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+      <End Role="ProductionPlanEmployee" EntitySet="ProductionPlanEmployee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionPlanProduct_Product" Association="Self.FK_ProductionPlanProduct_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="ProductionPlanProduct" EntitySet="ProductionPlanProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionPlanProduct_ProductionPlan" Association="Self.FK_ProductionPlanProduct_ProductionPlan">
+      <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+      <End Role="ProductionPlanProduct" EntitySet="ProductionPlanProduct" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

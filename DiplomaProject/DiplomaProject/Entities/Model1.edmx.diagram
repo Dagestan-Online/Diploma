@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="81cf0d0ced6f4d2295b99734c4c286d6" Name="Diagram1">
+        <EntityTypeShape EntityType="DiplomaDBModel.Employee" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.Material" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.Post" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.Product" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.ProductionPlan" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.ProductionPlanEmployee" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.ProductionPlanProduct" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.ProductType" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaDBModel.sysdiagram" Width="1.5" PointX="7.75" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="DiplomaDBModel.FK_Employee_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_ProductionPlanEmployee_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_Product_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_Product_ProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_ProductionPlanProduct_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_ProductionPlanEmployee_ProductionPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaDBModel.FK_ProductionPlanProduct_ProductionPlan" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,179 @@
+﻿<Page x:Class="DiplomaProject.Pages.ProductType.ProductTypePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DiplomaProject.Pages.ProductType"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="ProductTypePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Border Height="auto"
+                Grid.Row="0"
+                Background="#C4C4C4"
+                VerticalAlignment="Top"
+                Margin="0,0,0,10">
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="Найти:"
+                           Margin="5,2,5,2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+                <TextBox VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Margin="0,2,0,2"
+                         x:Name="tbFindText"
+                         Width="140" 
+                         TextChanged="tbFindText_TextChanged"/>
+                <TextBlock Text="Сортировать:"
+                           Margin="50,2,5,2"
+                           Grid.Column="0"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"/>
+                <ComboBox x:Name="cmbSort"
+                          Template="{DynamicResource CustomComboBoxTemplate}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Left"
+                          Margin="0,2,0,2"
+                          Width="140" 
+                          SelectionChanged="cmbSort_SelectionChanged">
+                    <ComboBoxItem Content="Без сортировки"/>
+                    <ComboBoxItem Content="От А до Я"/>
+                    <ComboBoxItem Content="От Я до А"/>
+                </ComboBox>
+
+                <Button VerticalAlignment="Center"
+                        Margin="50,2,5,2"
+                        Content="Добавить тип изделия"
+                        FontSize="14"
+                        Style="{StaticResource NeutralButton}" 
+                        Click="AddInfo_Click"/>
+            </WrapPanel>
+        </Border>
+        <ListView Background="#FFC4C4C4"
+                  Grid.Row="1"
+                  x:Name="lvInfo"
+                  HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Наименование:"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding name}"
+                                       Margin="5,0,0,0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Right"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" 
+                                    Margin="0,5,0,0">
+                            <Button Content="Удалить"
+                                    Margin="5,0,5,10"
+                                    FontSize="14" 
+                                    Style="{StaticResource NegativeButton}" 
+                                    Click="DeleteInfo_Click"/>
+                            <Button Content="Изменить"
+                                    Margin="5,0,5,10"
+                                    FontSize="14" 
+                                    Style="{StaticResource PositiveButton}" 
+                                    Click="EditInfo_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="0 10 0 0"
+                    Grid.Row="2">
+            <TextBlock Text="Страница:"
+                       Margin="0,0,5,0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <TextBox VerticalAlignment="Center"
+                     HorizontalAlignment="Left"
+                     Margin="0,0,20,0"
+                     x:Name="tbSelectedPage"
+                     Width="60" PreviewTextInput="tbSelectedPage_PreviewTextInput"/>
+            <Button VerticalAlignment="Center"
+                    Margin="0,0,0,0"
+                    Content="Перейти"
+                    FontSize="14"
+                    Style="{StaticResource NeutralButton}" 
+                    Click="ChangePage_Click"/>
+
+            <TextBlock Text="Записей на странице:"
+                       Margin="50,0,5,0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <TextBlock x:Name="tbCurrentEntries"
+                       Text="N/A"
+                       Margin="0,0,5,0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+
+            <TextBlock Text="Всего записей:"
+                       Margin="20,0,5,0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <TextBlock x:Name="tbTotalEntries"
+                       Text="N/A"
+                       Margin="0,0,5,0"
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Bottom"
+                    Margin="0,10,0,0"
+                    Grid.Row="2">
+            <Button Content="&lt;&lt;"
+                    x:Name="BtnFirstPage"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource NeutralButton}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Click="BtnFirstPage_Click"/>
+            <Button Content="&lt;"
+                    x:Name="BtnPreviousPage"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource NeutralButton}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Click="BtnPreviousPage_Click"/>
+            <TextBlock Text="*/*"
+                       x:Name="tbPages"
+                       Margin="0,0,10,0"
+                       Height="14"
+                       FontSize="12"/>
+            <Button Content="&gt;"
+                    x:Name="BtnNextPage"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource NeutralButton}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Click="BtnNextPage_Click"/>
+            <Button Content="&gt;&gt;"
+                    x:Name="BtnLastPage"
+                    Style="{StaticResource NeutralButton}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" 
+                    Click="BtnLastPage_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
