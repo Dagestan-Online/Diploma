@@ -73,6 +73,16 @@
                                 FontSize="14"
                                 Style="{StaticResource NeutralButton}"
                                 Click="NavigatePage_Click"/>
+
+                        <Separator Margin="5"/>
+
+                        <Button x:Name="btnCreateReport"
+                                VerticalAlignment="Center"
+                                Margin="5"
+                                Content="Создать отчет"
+                                FontSize="14"
+                                Style="{StaticResource EventButton}" 
+                                Click="CreateMonthlyReport"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Grid.Row="1">
                         <Button x:Name="btnExit"

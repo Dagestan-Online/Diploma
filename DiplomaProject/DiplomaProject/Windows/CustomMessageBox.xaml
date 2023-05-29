@@ -40,7 +40,7 @@
                        Width="50"
                        Height="50"
                        Margin="20,0,10,0"
-                       Source="C:\Users\vlad2\Рабочий стол\пивной диплом\DiplomaProject\DiplomaProject\Images\NoImage.jpg"/>
+                       Source="\Images\NoImage.jpg"/>
                 <ScrollViewer Width="254"
                           Height="118"
                           VerticalScrollBarVisibility="Auto">

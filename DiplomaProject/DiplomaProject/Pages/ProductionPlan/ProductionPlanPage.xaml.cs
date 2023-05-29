@@ -78,7 +78,7 @@ namespace DiplomaProject.Pages.ProductionPlan
             }
             if (cmbFilter.SelectedIndex == 1)
             {
-                productionPlans = productionPlan.Where(x => x.finishDate < DateTime.Today).ToArray();
+                productionPlans = productionPlan.Where(x => x.finishDate <= DateTime.Today).ToArray();
             }
             if (cmbFilter.SelectedIndex == 2)
             {
@@ -86,7 +86,7 @@ namespace DiplomaProject.Pages.ProductionPlan
             }
             if (cmbFilter.SelectedIndex == 3)
             {
-                productionPlans = productionPlan.Where(x => x.startDate > DateTime.Today).ToArray();
+                productionPlans = productionPlan.Where(x => x.startDate >= DateTime.Today).ToArray();
             }
             return productionPlans;
         }
