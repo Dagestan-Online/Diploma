@@ -90,7 +90,7 @@
                                 Margin="5,0,5,10"
                                 FontSize="14" 
                                 Style="{StaticResource NegativeButton}"
-                                Click="CloseProgram_Click" BorderBrush="#FFE4BB91"/>
+                                Click="CloseProgram_Click"/>
                     </StackPanel>
                 </Grid>
             </Border>
