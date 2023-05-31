@@ -299,7 +299,7 @@
     <Resource Include="Images\NoImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <SplashScreen Include="Images\SplashScreen.gif" />
+    <Resource Include="Images\SplashScreen.gif" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -315,6 +315,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <SplashScreen Include="Images\SplashScreen.jpg" />
     <Resource Include="nicebox.ico" />
     <Resource Include="Images\picture.png" />
   </ItemGroup>

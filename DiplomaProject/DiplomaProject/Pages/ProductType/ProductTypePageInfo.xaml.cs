@@ -39,7 +39,7 @@ namespace DiplomaProject.Pages.ProductType
         private bool CheckInfo()
         {
             var info = this.DataContext as Entities.ProductType;
-            if (info.name == null)
+            if (info.name == null || tbName.Text == "")
                 message += "Наименование типа изделия не указано\n";
             if (message == "")
                 return true;

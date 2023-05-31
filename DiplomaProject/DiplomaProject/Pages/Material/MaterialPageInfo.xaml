@@ -36,8 +36,10 @@
                     <TextBlock Text="Наименование:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
-                    <TextBox VerticalAlignment="Center"
+                    <TextBox x:Name="tbName"
+                        VerticalAlignment="Center"
                          HorizontalAlignment="Left"
+                             MaxLength="70"
                          Text="{Binding name}"
                          Width="120"
                          Margin="10,0,0,0"/>

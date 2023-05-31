@@ -51,6 +51,7 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
                         <TextBox x:Name="tbName"
+                                 MaxLength="30"
                         VerticalAlignment="Center"
                          HorizontalAlignment="Left"
                          Text="{Binding name}"
@@ -62,6 +63,7 @@
                            HorizontalAlignment="Right"/>
                         <TextBox x:Name="tbDescription"
                                  VerticalAlignment="Center"
+                                 MaxLength="200"
                                  HorizontalAlignment="Left"
                                  TextWrapping="Wrap"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -129,6 +131,7 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
                                 <TextBox x:Name="tbCount"
+                                         MaxLength="7"
                                      VerticalAlignment="Center"
                                      HorizontalAlignment="Center"
                                      Width="80"
@@ -151,7 +154,7 @@
                                    HorizontalAlignment="Center"/>
                             <ComboBox Template="{DynamicResource CustomComboBoxTemplate}" 
                                   x:Name="cbEmployee"
-                                  DisplayMemberPath="email"
+                                  ItemTemplate="{StaticResource cmbFullName}"
                                   Width="120"
                                   Height="25"
                                   Margin="10,5,10,0"/>

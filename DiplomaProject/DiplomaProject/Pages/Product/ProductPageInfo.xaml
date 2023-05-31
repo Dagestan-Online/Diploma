@@ -42,8 +42,10 @@
                         <TextBlock Text="Наименование:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
-                        <TextBox VerticalAlignment="Center"
+                        <TextBox x:Name="tbName"
+                            VerticalAlignment="Center"
                              HorizontalAlignment="Left"
+                                 MaxLength="50"
                              Text="{Binding name}"
                              Width="120"
                              Margin="10,0,0,0"/>
@@ -54,6 +56,7 @@
                         <TextBox x:Name="tbCount"
                              VerticalAlignment="Center"
                              HorizontalAlignment="Left"
+                                 MaxLength="7"
                              Text="{Binding count}"
                              Width="120"
                              Margin="10,0,0,0" 
@@ -98,6 +101,7 @@
                             <TextBox x:Name="tbDescription"
                                  VerticalAlignment="Top"
                                  HorizontalAlignment="Left"
+                                     MaxLength="200"
                                  TextWrapping="Wrap"
                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
                                  MinLines="1"

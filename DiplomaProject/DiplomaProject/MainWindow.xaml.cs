@@ -37,6 +37,7 @@ namespace DiplomaProject
         public MainWindow()
         {
             InitializeComponent();
+            ListEvents.currentList = "ProductPage";
             frPages.Navigate(new ProductPage(frPages));
             PageEvents.previousButton = btnPoduct;
         }
@@ -47,21 +48,27 @@ namespace DiplomaProject
             switch (btn.Name)
             {
                 case "btnPost":
+                    ListEvents.currentList = "PostPage";
                     frPages.Navigate(new PostPage(frPages));
                     break;
                 case "btnEmployee":
+                    ListEvents.currentList = "EmployeePage";
                     frPages.Navigate(new EmployeePage(frPages));
                     break;
                 case "btnPoductionPlan":
+                    ListEvents.currentList = "ProductionPlanPage";
                     frPages.Navigate(new ProductionPlanPage(frPages));
                     break;
                 case "btnPoduct":
+                    ListEvents.currentList = "ProductPage";
                     frPages.Navigate(new ProductPage(frPages));
                     break;
                 case "btnProductType":
+                    ListEvents.currentList = "ProductTypePage";
                     frPages.Navigate(new ProductTypePage(frPages));
                     break;
                 case "btnMaterial":
+                    ListEvents.currentList = "MaterialPage";
                     frPages.Navigate(new MaterialPage(frPages));
                     break;
                 default:
@@ -102,7 +109,7 @@ namespace DiplomaProject
             }
         }
 
-        private void CreateMonthlyReport(object sender, RoutedEventArgs e)
+        private void CreateReport(object sender, RoutedEventArgs e)
         {
             //Random random = new Random();
             //string NumDoc = random.Next(1, 1000).ToString();
@@ -116,6 +123,11 @@ namespace DiplomaProject
 
             Microsoft.Office.Interop.Word.Document document = application.Documents.Add();
 
+            document.PageSetup.BottomMargin = 5;
+            document.PageSetup.TopMargin = 5;
+            document.PageSetup.LeftMargin = 50;
+            document.PageSetup.RightMargin = 50;
+
             Microsoft.Office.Interop.Word.Paragraph DocNum = document.Paragraphs.Add();
             Microsoft.Office.Interop.Word.Range DocRange = DocNum.Range;
 
@@ -125,6 +137,7 @@ namespace DiplomaProject
             DocNum.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
             DocRange.Font.Color = Word.WdColor.wdColorBlack;
             DocRange.Font.Size = 16;
+            DocRange.Font.Bold = 1;
             DocRange.InsertParagraphAfter();
 
             Microsoft.Office.Interop.Word.Paragraph DocDescription = document.Paragraphs.Add();
@@ -134,6 +147,7 @@ namespace DiplomaProject
             Microsoft.Office.Interop.Word.Range tableRange = tableParagraph.Range;
             Microsoft.Office.Interop.Word.Table Information = document.Tables.Add(tableRange, 8, 2);
 
+            //Information.Range.Cells.HeightRule = WdRowHeightRule.wdRowHeightAtLeast;
             Information.Range.Cells.VerticalAlignment = Microsoft.Office.Interop.Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             Information.Borders.Enable = 1;
 
@@ -209,16 +223,16 @@ namespace DiplomaProject
 
             //Сохранение документа
             object filename = $@"Отчет от {DateTime.Now.ToShortDateString()}.docx";
-            //object filename1 = $@"Приказ на увольнение " + _currentRow.Surname + " " + _currentRow.Name + " " + _currentRow.Patronymic + ".pdf";
+            object filename1 = $@"Отчет от {DateTime.Now.ToShortDateString()}.pdf";
             try
             {
                 document.SaveAs(filename);
+                document.SaveAs(filename1, Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
             }
             catch (Exception ex)
             {
                 new CustomMessageBox("Внимание!", ex.Message, "ОК", "Отменить", 3, false).ShowDialog();
             }
-            //document.SaveAs(filename1, Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
             try
             {
                 //Закрытие текущего документа

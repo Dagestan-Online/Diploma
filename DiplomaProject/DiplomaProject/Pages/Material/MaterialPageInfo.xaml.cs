@@ -39,7 +39,7 @@ namespace DiplomaProject.Pages.Material
         private bool CheckInfo()
         {
             var info = this.DataContext as Entities.Material;
-            if (info.name == null)
+            if (info.name == null || tbName.Text == "")
                 message += "Наименование материала не указано\n";
             if (message == "")
                 return true;

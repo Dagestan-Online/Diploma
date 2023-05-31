@@ -3,6 +3,7 @@ using DiplomaProject.Entities;
 using DiplomaProject.Windows;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,6 +60,13 @@ namespace DiplomaProject.Pages.ProductionPlan
             massCmbEmployees[0] = cbEmployee;
             cbEmployee.ItemsSource = db.Employees.ToList();
             cbProduct.ItemsSource = db.Products.ToList();
+
+            if (tblTitle.Text == "Создание нового плана производства")
+            {
+                cbEmployee.SelectedIndex = 0;
+                cbProduct.SelectedIndex = 0;
+                //tbCount.Text = "1";
+            }
         }
 
         public void UpdateFillMass()
@@ -86,7 +94,8 @@ namespace DiplomaProject.Pages.ProductionPlan
             ComboBox comboBox = new ComboBox();
             comboBox.Name = "cbNewEmployee" + indexNameCmbEmployees;
             indexNameCmbEmployees++;
-            comboBox.DisplayMemberPath = "email";
+            //comboBox.DisplayMemberPath = "email";
+            comboBox.ItemTemplate = (DataTemplate)comboBox.FindResource("cmbFullName");
             comboBox.Margin = new Thickness(10, 5, 10, 0);
             comboBox.ItemsSource = db.Employees.ToList();
             comboBox.SelectedIndex = (int)(connectionEmployee[indexConnectionEmployee].id_employee - 1);
@@ -118,6 +127,7 @@ namespace DiplomaProject.Pages.ProductionPlan
             textBox.Padding = new Thickness(5, 1, 5, 0);
             textBox.Width = 80;
             textBox.Height = 25;
+            textBox.MaxLength = 7;
             textBox.PreviewTextInput += tbCount_PreviewTextInput;
             massComboBoxs[indexNameCmbProducts - 1] = comboBox;
             massTextBoxs[indexNameCmbProducts - 1] = textBox;
@@ -127,37 +137,73 @@ namespace DiplomaProject.Pages.ProductionPlan
 
         private void BtnSaveInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (massTextBoxs[0].Text == "" || massTextBoxs[0].Text == "0" || massComboBoxs[0].Text == "")
+            /*if (massTextBoxs[0].Text == "" || massTextBoxs[0].Text == "0" || massComboBoxs[0].Text == "")
             {
                 message += "Не все изделия или их количество указаны\n";
             }
             if (massCmbEmployees[0].Text == "")
             {
                 message += "Не все сотрудники указаны\n";
-            }
+            }*/
             for (int i = 0; i < indexNameCmbProducts - 1; i++)
             {
-                if (massComboBoxs[i].Text == massComboBoxs[++i].Text || massComboBoxs[i].Text == "")
+                for (int j = 0; j < indexNameCmbProducts - 1; j++)
                 {
-                    message += "Указаны повторяющиеся изделия\n";
-                    break;
+                    try
+                    {
+                        if (massComboBoxs[i].Text == massComboBoxs[j + 1].Text & (i != j + 1))
+                        {
+                            message += "Указаны повторяющиеся изделия\n";
+                            //break;
+                            goto exitVerificationProductsСycle;
+                        }
+                        else if (massComboBoxs[i].Text == "" || massComboBoxs[j + 1].Text == "")
+                        {
+                            message += "Не все изделия указаны\n";
+                            goto exitVerificationProductsСycle;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        new CustomMessageBox("Внимание!", ex.Message, "ОК", "Назад", 3, false).ShowDialog();
+                    }
                 }
-
             }
+            exitVerificationProductsСycle:
             for (int i = 0; i < indexNameCmbEmployees - 1; i++)
             {
-                if (massCmbEmployees[i].Text == massCmbEmployees[++i].Text || massCmbEmployees[i].Text == "")
+                for (int j = 0; j < indexNameCmbEmployees - 1; j++)
                 {
-                    message += "Указаны повторяющиеся сотрудники или не указаны в целом\n";
-                    break;
-                }
+                    try
+                    {
+                        string cmbFirstVerificationEmployee = ((Entities.Employee)massCmbEmployees[i].SelectedItem).phone.ToString();
+                        string cmbSecondVerificationEmployee = ((Entities.Employee)massCmbEmployees[j+1].SelectedItem).phone.ToString();
 
+                        if (cmbFirstVerificationEmployee == cmbSecondVerificationEmployee & (i != j + 1))
+                        {
+                            //message += "Указаны повторяющиеся сотрудники или не указаны в целом\n";
+                            message += "Указаны повторяющиеся сотрудники\n";
+                            goto exitVerificationEmployeesСycle;
+                            //break;
+                        }
+                        else if (cmbFirstVerificationEmployee == "" || cmbSecondVerificationEmployee == "")
+                        {
+                            message += "Не все сотрудники указаны\n";
+                            goto exitVerificationEmployeesСycle;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        new CustomMessageBox("Внимание!", ex.Message, "ОК", "Назад", 3, false).ShowDialog();
+                    }
+                }
             }
+            exitVerificationEmployeesСycle:
             for (int i = 0; i < indexNameCmbProducts; i++)
             {
                 if (massTextBoxs[i].Text == "" || massTextBoxs[i].Text == "0")
                 {
-                    message += "Не все количества изделий указаны\n";
+                    message += "Не для всех изделий указано количество\n";
                     break;
                 }
                 string word = massTextBoxs[i].Text;
@@ -168,7 +214,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                 }
             }
 
-            if (info.name == null)
+            if (info.name == null || tbName.Text == "")
                 message += "Наименование плана производства не указано\n";
             if (info.description == null)
                 info.description = "Отсутствует";
@@ -240,7 +286,8 @@ namespace DiplomaProject.Pages.ProductionPlan
                         {
                             if (massCmbEmployees[i] != null)
                             {
-                                var nowText = massCmbEmployees[i].Text;
+                                var nowText = ((Entities.Employee)massCmbEmployees[i].SelectedItem).email.ToString(); //massCmbEmployees[i].Text;
+                                //String word = nowText.Substring(0, nowText.IndexOf(' '));
                                 authEmployee = context.Employees.Where(b => b.email == nowText).FirstOrDefault();
                                 if (authEmployee != null)
                                 {
@@ -299,6 +346,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                         textBox.Padding = new Thickness(5, 1, 5, 0);
                         textBox.Width = 80;
                         textBox.Height = 25;
+                        textBox.MaxLength = 7;
                         textBox.PreviewTextInput += tbCount_PreviewTextInput;
                         massComboBoxs[indexNameCmbProducts - 1] = comboBox;
                         massTextBoxs[indexNameCmbProducts - 1] = textBox;
@@ -307,7 +355,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                     }
                     else
                     {
-                        new CustomMessageBox("Внимание!", "Достигнут лимит в добавлении изделий в текущий план", "ОК", "Назад", 1, false).ShowDialog();
+                        new CustomMessageBox("Внимание!", "Достигнут лимит добавления изделий для текущего плана", "ОК", "Назад", 1, false).ShowDialog();
                     }
                     break;
                 case "-":
@@ -323,7 +371,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                     }
                     else
                     {
-                        new CustomMessageBox("Внимание!", "Достигнут лимит в удалении сотрудников в текущий план", "ОК", "Назад", 1, false).ShowDialog();
+                        new CustomMessageBox("Внимание!", "Достигнут лимит удаления изделий для текущего плана", "ОК", "Назад", 1, false).ShowDialog();
                     }
                     break;
                 default:
@@ -343,7 +391,8 @@ namespace DiplomaProject.Pages.ProductionPlan
                         ComboBox comboBox = new ComboBox();
                         comboBox.Name = "cbNewEmployee" + indexNameCmbEmployees;
                         indexNameCmbEmployees++;
-                        comboBox.DisplayMemberPath = "email";
+                        //comboBox.DisplayMemberPath = "email";
+                        comboBox.ItemTemplate = (DataTemplate)comboBox.FindResource("cmbFullName");
                         comboBox.Margin = new Thickness(10, 5, 10, 0);
                         comboBox.ItemsSource = db.Employees.ToList();
                         comboBox.SelectedIndex = 0;
@@ -355,7 +404,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                     }
                     else
                     {
-                        new CustomMessageBox("Внимание!", "Достигнут лимит в добавлении сотрудников в текущий план", "ОК", "Назад", 1, false).ShowDialog();
+                        new CustomMessageBox("Внимание!", "Достигнут лимит добавления сотрудников для текущего плана", "ОК", "Назад", 1, false).ShowDialog();
                     }
                     break;
                 case "-":
@@ -369,7 +418,7 @@ namespace DiplomaProject.Pages.ProductionPlan
                     }
                     else
                     {
-                        new CustomMessageBox("Внимание!", "Достигнут лимит в удалении сотрудников в текущий план", "ОК", "Назад", 1, false).ShowDialog();
+                        new CustomMessageBox("Внимание!", "Достигнут лимит удаления сотрудников для текущего плана", "ОК", "Назад", 1, false).ShowDialog();
                     }
                     break;
                 default:
@@ -379,9 +428,16 @@ namespace DiplomaProject.Pages.ProductionPlan
 
         private void tbCount_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0))
+            try
             {
-                e.Handled = true;
+                if (!Char.IsDigit(e.Text, 0))
+                {
+                    e.Handled = true;
+                }
+            }
+            catch
+            {
+
             }
         }
 

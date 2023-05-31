@@ -59,7 +59,7 @@ namespace DiplomaProject.Pages.Product
             if (info.ProductType == null)
                 message += "Тип изделия не указан\n";
             if (info.description == null)
-                tbDescription.Text = "Отсутствует";
+                info.description = "Отсутствует";
             if (message == "")
                 return true;
             else
@@ -131,9 +131,16 @@ namespace DiplomaProject.Pages.Product
 
         private void tbCount_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0))
+            try
             {
-                e.Handled = true;
+                if (!Char.IsDigit(e.Text, 0))
+                {
+                    e.Handled = true;
+                }
+            }
+            catch
+            {
+
             }
         }
     }

@@ -82,7 +82,7 @@
                                 Content="Создать отчет"
                                 FontSize="14"
                                 Style="{StaticResource EventButton}" 
-                                Click="CreateMonthlyReport"/>
+                                Click="CreateReport"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Grid.Row="1">
                         <Button x:Name="btnExit"
@@ -90,7 +90,7 @@
                                 Margin="5,0,5,10"
                                 FontSize="14" 
                                 Style="{StaticResource NegativeButton}"
-                                Click="CloseProgram_Click"/>
+                                Click="CloseProgram_Click" BorderBrush="#FFE4BB91"/>
                     </StackPanel>
                 </Grid>
             </Border>

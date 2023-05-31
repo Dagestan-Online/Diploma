@@ -38,7 +38,7 @@ namespace DiplomaProject.Pages.Post
         private bool CheckInfo()
         {
             var info = this.DataContext as Entities.Post;
-            if (info.name == null)
+            if (info.name == null || tbName.Text == "")
                 message += "Наименование должности не указано\n";
             if (message == "")
                 return true;

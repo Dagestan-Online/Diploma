@@ -58,7 +58,10 @@
         </Border>
         <ListView Background="#FFC4C4C4"
                   Grid.Row="1"
-                  x:Name="lvInfo">
+                  x:Name="lvInfo"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                  ScrollViewer.CanContentScroll="False">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -86,15 +89,18 @@
                                            Margin="5,0,0,0"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Right"/>
+                            </StackPanel>
 
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="0,5,0,0">
                                 <TextBlock Text="Должность:"
-                                           Margin="20,0,0,0"
+                                           Margin="0,0,0,0"
                                            VerticalAlignment="Center"
-                                           HorizontalAlignment="Right"/>
+                                           HorizontalAlignment="Left"/>
                                 <TextBlock Text="{Binding Post.name}"
                                            Margin="5,0,0,0"
                                            VerticalAlignment="Center"
-                                           HorizontalAlignment="Right"/>
+                                           HorizontalAlignment="Left"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal"

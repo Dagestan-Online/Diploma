@@ -589,6 +589,18 @@
             </Style.Triggers>
         </Style>
         <!--#endregion-->
+        
+        <!--#region MassComboBoxItemTemplate-->
+        <DataTemplate x:Key="cmbFullName">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="tbLastname" Margin="0 0 5 0" Text="{Binding lastname}"/>
+                <TextBlock x:Name="tbName" Margin="0 0 5 0" Text="{Binding name}"/>
+                <TextBlock x:Name="tbMiddlename" Margin="0 0 5 0" Text="{Binding middlename}"/>
+                <TextBlock x:Name="tbDash" Text="-" Margin="0 0 5 0"/>
+                <TextBlock x:Name="tbPost" Margin="0 0 0 0" Text="{Binding Post.name}"/>
+            </StackPanel>
+        </DataTemplate>
+        <!--#endregion-->
 
     </Application.Resources>
 </Application>

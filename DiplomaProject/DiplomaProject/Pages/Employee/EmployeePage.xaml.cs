@@ -229,9 +229,16 @@ namespace DiplomaProject.Pages.Employee
 
         private void tbSelectedPage_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Char.IsDigit(e.Text, 0))
+            try
             {
-                e.Handled = true;
+                if (!Char.IsDigit(e.Text, 0))
+                {
+                    e.Handled = true;
+                }
+            }
+            catch
+            {
+
             }
         }
     }

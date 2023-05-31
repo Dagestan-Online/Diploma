@@ -42,8 +42,10 @@
                         <TextBlock Text="Фамилия:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
-                        <TextBox VerticalAlignment="Center"
+                        <TextBox x:Name="tbLastname"
+                            VerticalAlignment="Center"
                          HorizontalAlignment="Left"
+                                 MaxLength="20"
                          Text="{Binding lastname}"
                          Width="120"
                          Margin="10,0,0,0"/>
@@ -51,8 +53,10 @@
                         <TextBlock Text="Имя:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
-                        <TextBox VerticalAlignment="Center"
+                        <TextBox x:Name="tbName"
+                            VerticalAlignment="Center"
                          HorizontalAlignment="Left"
+                                 MaxLength="20"
                          Text="{Binding name}"
                          Width="120"
                          Margin="10,0,0,0"/>
@@ -60,8 +64,10 @@
                         <TextBlock Text="Отчество:"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Right"/>
-                        <TextBox VerticalAlignment="Center"
+                        <TextBox x:Name="tbMiddlename"
+                            VerticalAlignment="Center"
                          HorizontalAlignment="Left"
+                                 MaxLength="20"
                          Text="{Binding middlename}"
                          Width="120"
                          Margin="10,0,0,0"/>
@@ -99,6 +105,7 @@
                         <TextBox x:Name="tbEmail"
                         VerticalAlignment="Center"
                          HorizontalAlignment="Left"
+                                 MaxLength="30"
                          Text="{Binding email}"
                          Width="120"
                          Margin="10,0,0,0"/>

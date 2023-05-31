@@ -33,6 +33,8 @@ namespace DiplomaProject.Pages.Employee
         DiplomaDBEntities db;
         Frame masterFrame;
         string message = "";
+        string originEmail = "";
+        string originPhone = "";
         Entities.Employee info;
         byte[] data;
         Regex regex = new Regex(@"\+\d{1}-\d{3}-\d{3}-\d{2}-\d{2}");
@@ -53,9 +55,9 @@ namespace DiplomaProject.Pages.Employee
             info = this.DataContext as Entities.Employee;
             if (data != null)
                 info.image = data;
-            if (info.lastname == null)
+            if (info.lastname == null || tbLastname.Text == "")
                 message += "Фамилия сотрудника не указана\n";
-            if (info.name == null)
+            if (info.name == null || tbName.Text == "")
                 message += "Имя сотрудника не указано\n";
             if (info.middlename == null)
                 message += "Отчество сотрудника не указано\n";
@@ -72,7 +74,7 @@ namespace DiplomaProject.Pages.Employee
                 if (tbPhone.Text.Length < 16)
                     message += "Номер телефона указан неполностью\n";
             }
-            if (info.email == null)
+            if (info.email == null || tbEmail.Text == "")
             {
                 message += "Электронная почта не указана\n";
             }
@@ -95,13 +97,51 @@ namespace DiplomaProject.Pages.Employee
                     message += "Новый сотрудник несовершеннолетний\n";
                 }
             }
-            using (Entities.DiplomaDBEntities context = new DiplomaDBEntities())
+
+            if (tblTitle.Text == "Редактирование текущего сотрудника")
             {
-                //Entities.Employee[] currentEmployee = context.Employees.ToArray();
-                Entities.Employee currentEmail = context.Employees.Where(b => b.email == tbEmail.Text).FirstOrDefault();
-                if (currentEmail != null)
+                if (originEmail != tbEmail.Text)
                 {
-                    message += "Такая электронная почта уже существует\n";
+                    using (Entities.DiplomaDBEntities context = new DiplomaDBEntities())
+                    {
+                        //Entities.Employee[] currentEmployee = context.Employees.ToArray();
+                        Entities.Employee currentEmail = context.Employees.Where(b => b.email == tbEmail.Text).FirstOrDefault();
+                        if (currentEmail != null)
+                        {
+                            message += "Такая электронная почта уже существует\n";
+                        }
+                    }
+                }
+                if (originPhone != tbPhone.Text)
+                {
+                    using (Entities.DiplomaDBEntities context = new DiplomaDBEntities())
+                    {
+                        Entities.Employee currentPhone = context.Employees.Where(b => b.phone == tbPhone.Text).FirstOrDefault();
+                        if (currentPhone != null)
+                        {
+                            message += "Такой номер телефона уже существует\n";
+                        }
+                    }
+                }
+            }
+            else
+            {
+                using (Entities.DiplomaDBEntities context = new DiplomaDBEntities())
+                {
+                    //Entities.Employee[] currentEmployee = context.Employees.ToArray();
+                    Entities.Employee currentEmail = context.Employees.Where(b => b.email == tbEmail.Text).FirstOrDefault();
+                    if (currentEmail != null)
+                    {
+                        message += "Такая электронная почта уже существует\n";
+                    }
+                }
+                using (Entities.DiplomaDBEntities context = new DiplomaDBEntities())
+                {
+                    Entities.Employee currentPhone = context.Employees.Where(b => b.phone == tbPhone.Text).FirstOrDefault();
+                    if (currentPhone != null)
+                    {
+                        message += "Такой номер телефона уже существует\n";
+                    }
                 }
             }
                 if (message == "")
@@ -202,6 +242,11 @@ namespace DiplomaProject.Pages.Employee
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (tblTitle.Text == "Редактирование текущего сотрудника")
+            {
+                originEmail = tbEmail.Text;
+                originPhone = tbPhone.Text;
+            }
             if (dpEmployment.SelectedDate is null)
             {
                 dpEmployment.SelectedDate = DateTime.Today;
